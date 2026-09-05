@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moto papi 🏍️</title>
+    <style>
+        /* Paleta de colores: Rojo, Negro y Blanco */
+        :root {
+            --bg-dark: #121212;      /* Fondo Negro */
+            --card-bg: #ffffff;      /* Tarjetas Blancas */
+            --primary: #e60000;      /* Detalles y botones Rojos */
+            --text-dark: #111111;    /* Texto negro dentro de tarjetas */
+            --text-light: #ffffff;   /* Texto blanco sobre fondo negro */
+            --border-color: #dddddd; /* Bordes sutiles */
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 20px 15px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 0px var(--primary);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 25px 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(230, 0, 0, 0.15); /* Sombra rojiza */
+            margin-bottom: 20px;
+            border-top: 5px solid var(--primary); /* Borde superior rojo */
+        }
+
+        .bg-highlight {
+            background-color: #fafafa;
+            border-top: 5px solid #111111; /* Borde negro para variar */
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 1.4rem;
+            color: var(--text-dark);
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            margin-top: 15px;
+            font-size: 0.95rem;
+            color: #444;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            background-color: #f9f9f9;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: #fff;
+        }
+
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .col {
+            flex: 1;
+        }
+
+        .gastos-title {
+            margin-top: 30px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 8px;
+            color: var(--primary);
+            text-transform: uppercase;
+            font-size: 1.1rem;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: var(--primary);
+            color: var(--text-light);
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 0px #a30000;
+            transition: all 0.1s;
+        }
+
+        .btn-submit:active {
+            transform: translateY(4px);
+            box-shadow: 0 0px 0px #a30000;
+        }
+
+        .stats-grid {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .stats-grid div {
+            flex: 1;
+        }
+
+        .stats-grid p {
+            margin: 0;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .stats-grid h3 {
+            margin: 10px 0 0 0;
+            font-size: 1.8rem;
+        }
+
+        .text-black { color: var(--text-dark); font-weight: 900; }
+        .text-red { color: var(--primary); }
+
+        .stats-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .stats-list li {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.05rem;
+        }
+        
+        .stats-list li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .val-highlight {
+            font-weight: 900;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Moto papi 🏍️</h1>
+        
+        <!-- Formulario de Ingreso -->
+        <form id="jornadaForm" class="card">
+            <h2>📝 Registrar Día</h2>
+            
+            <label>Fecha:</label>
+            <input type="date" id="fecha" required>
+
+            <div class="row">
+                <div class="col">
+                    <label>Hora Inicio:</label>
+                    <input type="time" id="horaInicio" required>
+                </div>
+                <div class="col">
+                    <label>Hora Fin:</label>
+                    <input type="time" id="horaFin" required>
+                </div>
+            </div>
+
+            <label>Total de Carreras:</label>
+            <input type="number" id="carreras" placeholder="Ej. 15" required min="1">
+
+            <label>Ingreso Total (Bruto $):</label>
+            <input type="number" id="ingresos" step="0.01" placeholder="Ej. 50.00" required min="0">
+
+            <h3 class="gastos-title">Gastos del Día</h3>
+            <div class="row">
+                <div class="col">
+                    <label>Gasolina ($):</label>
+                    <input type="number" id="gasolina" step="0.01" value="0" min="0">
+                </div>
+                <div class="col">
+                    <label>Comida ($):</label>
+                    <input type="number" id="comida" step="0.01" value="0" min="0">
+                </div>
+                <div class="col">
+                    <label>Otros ($):</label>
+                    <input type="number" id="otros" step="0.01" value="0" min="0">
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">Guardar Jornada</button>
+        </form>
+
+        <!-- Resumen Rápido -->
+        <div class="card bg-highlight">
+            <h2>💰 Último Registro</h2>
+            <div class="stats-grid">
+                <div>
+                    <p>Ganancia Neta</p>
+                    <h3 id="resumenNeta" class="text-black">$0.00</h3>
+                </div>
+                <div>
+                    <p>Gastos Totales</p>
+                    <h3 id="resumenGastos" class="text-red">$0.00</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="card">
+            <h2>📈 Estadísticas (Global)</h2>
+            <ul class="stats-list">
+                <li><strong>Mejor día:</strong> <span id="mejorDia" class="val-highlight">-</span></li>
+                <li><strong>Mejor horario:</strong> <span id="mejorHora" class="val-highlight">-</span></li>
+                <li><strong>Total carreras:</strong> <span id="totalCarreras" class="val-highlight">0</span></li>
+                <li><strong>Ganancia Neta Total:</strong> <span id="gananciaTotal" class="text-black val-highlight">$0.00</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Establecer la fecha de hoy por defecto al cargar
+        document.getElementById('fecha').valueAsDate = new Date();
+
+        // Cargar registros del almacenamiento local del celular
+        let registros = JSON.parse(localStorage.getItem('motopapi_data')) || [];
+
+        // Función para procesar el formulario
+        document.getElementById('jornadaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Recolectar datos
+            const fecha = document.getElementById('fecha').value;
+            const horaInicio = document.getElementById('horaInicio').value;
+            const horaFin = document.getElementById('horaFin').value;
+            const carreras = parseInt(document.getElementById('carreras').value);
+            const ingresos = parseFloat(document.getElementById('ingresos').value);
+            
+            // Gastos
+            const gasolina = parseFloat(document.getElementById('gasolina').value) || 0;
+            const comida = parseFloat(document.getElementById('comida').value) || 0;
+            const otros = parseFloat(document.getElementById('otros').value) || 0;
+
+            // Cálculos matemáticos
+            const totalGastos = gasolina + comida + otros;
+            const gananciaNeta = ingresos - totalGastos;
+            
+            // Obtener día de la semana
+            const fechaObj = new Date(fecha + 'T00:00:00');
+            const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+            const diaNombre = diasSemana[fechaObj.getDay()];
+
+            // Crear el objeto del día
+            const nuevaJornada = {
+                fecha,
+                diaNombre,
+                horaInicio,
+                horaFin,
+                carreras,
+                ingresos,
+                gastos: { gasolina, comida, otros, total: totalGastos },
+                gananciaNeta
+            };
+
+            // Guardar en localStorage
+            registros.push(nuevaJornada);
+            localStorage.setItem('motopapi_data', JSON.stringify(registros));
+
+            // Actualizar interfaz y limpiar
+            actualizarInterfaz(nuevaJornada);
+            alert('¡Jornada guardada con éxito en Moto papi!');
+            
+            // Resetear formulario pero mantener la fecha de hoy y poner gastos en 0
+            this.reset();
+            document.getElementById('fecha').valueAsDate = new Date();
+            document.getElementById('gasolina').value = "0";
+            document.getElementById('comida').value = "0";
+            document.getElementById('otros').value = "0";
+        });
+
+        // Función para recalcular y mostrar estadísticas
+        function actualizarInterfaz(ultimaJornada = null) {
+            if (registros.length === 0) return;
+
+            // Mostrar el último registro ingresado
+            if (ultimaJornada) {
+                document.getElementById('resumenNeta').innerText = `$${ultimaJornada.gananciaNeta.toFixed(2)}`;
+                document.getElementById('resumenGastos').innerText = `$${ultimaJornada.gastos.total.toFixed(2)}`;
+            } else {
+                // Si recarga la página, muestra el último del historial
+                let lastReg = registros[registros.length - 1];
+                document.getElementById('resumenNeta').innerText = `$${lastReg.gananciaNeta.toFixed(2)}`;
+                document.getElementById('resumenGastos').innerText = `$${lastReg.gastos.total.toFixed(2)}`;
+            }
+
+            // Variables para acumular
+            let totalCarrerasHist = 0;
+            let gananciaNetaHist = 0;
+            let gananciasPorDia = {};
+            let gananciasPorHora = {};
+
+            registros.forEach(reg => {
+                totalCarrerasHist += reg.carreras;
+                gananciaNetaHist += reg.gananciaNeta;
+
+                // Sumar para encontrar el mejor día
+                if (!gananciasPorDia[reg.diaNombre]) {
+                    gananciasPorDia[reg.diaNombre] = 0;
+                }
+                gananciasPorDia[reg.diaNombre] += reg.gananciaNeta;
+
+                // Extraer la hora de inicio para encontrar el mejor horario (ej. "08:30" -> "08:00")
+                let horaBloque = reg.horaInicio.split(':')[0] + ":00"; 
+                if (!gananciasPorHora[horaBloque]) {
+                    gananciasPorHora[horaBloque] = 0;
+                }
+                gananciasPorHora[horaBloque] += reg.gananciaNeta;
+            });
+
+            // Actualizar totales
+            document.getElementById('totalCarreras').innerText = totalCarrerasHist;
+            document.getElementById('gananciaTotal').innerText = `$${gananciaNetaHist.toFixed(2)}`;
+
+            // Calcular mejor día
+            let mejorDia = '-';
+            let maxGananciaDia = 0;
+            for (const dia in gananciasPorDia) {
+                if (gananciasPorDia[dia] > maxGananciaDia) {
+                    maxGananciaDia = gananciasPorDia[dia];
+                    mejorDia = dia;
+                }
+            }
+            document.getElementById('mejorDia').innerText = mejorDia;
+
+            // Calcular mejor horario de inicio
+            let mejorHora = '-';
+            let maxGananciaHora = 0;
+            for (const hora in gananciasPorHora) {
+                if (gananciasPorHora[hora] > maxGananciaHora) {
+                    maxGananciaHora = gananciasPorHora[hora];
+                    mejorHora = hora; // Ej. "08:00"
+                }
+            }
+            // Formatear un poco la hora (Ej: de 08:00 a 09:00)
+            if(mejorHora !== '-') {
+                let horaNum = parseInt(mejorHora.split(':')[0]);
+                let horaFinNum = horaNum + 1;
+                let ampm = horaNum >= 12 ? 'PM' : 'AM';
+                document.getElementById('mejorHora').innerText = `${mejorHora} - ${horaFinNum}:00`;
+            }
+        }
+
+        // Ejecutar al cargar la página
+        window.onload = function() {
+            actualizarInterfaz(); 
+        };
+    </script>
+</body>
+</html>
