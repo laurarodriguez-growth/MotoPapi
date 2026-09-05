@@ -69,7 +69,6 @@
             text-align: center;
         }
 
-        /* Estructura lado a lado para los formularios */
         .forms-wrapper {
             display: flex;
             gap: 10px;
@@ -97,13 +96,39 @@
             border-radius: 8px;
             box-sizing: border-box;
             font-size: 1.1rem;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             text-align: center;
         }
         
         input:focus, select:focus {
             border-color: var(--primary);
             outline: none;
+        }
+
+        /* Botones de acceso rápido */
+        .quick-amounts {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .btn-quick {
+            flex: 1;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            padding: 6px 2px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: #333;
+            transition: background 0.2s;
+        }
+
+        .btn-quick:active {
+            background-color: #d32f2f;
+            color: white;
+            border-color: #d32f2f;
         }
 
         .btn-submit {
@@ -125,7 +150,6 @@
         .btn-red { background-color: var(--primary); }
         .btn-red:active { background-color: #b71c1c; transform: translateY(2px); }
 
-        /* Dashboard */
         .stats-grid {
             display: flex;
             justify-content: space-between;
@@ -174,7 +198,7 @@
         <h1>Moto Papi 🏍️</h1>
         <p class="greeting">Hola! Moto Papi Maikol ♥</p>
 
-        <!-- Dashboard movido arriba -->
+        <!-- Dashboard -->
         <div class="card bg-highlight">
             <h2 style="border-color: var(--primary); color: var(--primary);">Hoy</h2>
             <div class="stats-grid">
@@ -194,7 +218,16 @@
             <!-- Formulario Ingreso -->
             <form id="ingresoForm" class="card form-half">
                 <h2>Ingreso</h2>
-                <label>Pago de Carrera ($):</label>
+                <label>Pago ($):</label>
+                
+                <!-- Botones de acceso rápido -->
+                <div class="quick-amounts">
+                    <button type="button" class="btn-quick" onclick="setMonto(3)">$3</button>
+                    <button type="button" class="btn-quick" onclick="setMonto(4)">$4</button>
+                    <button type="button" class="btn-quick" onclick="setMonto(5)">$5</button>
+                    <button type="button" class="btn-quick" onclick="setMonto(10)">$10</button>
+                </div>
+
                 <input type="number" id="montoIngreso" step="0.01" placeholder="Ej. 3.50" required min="0.01">
                 <button type="submit" class="btn-submit btn-green">Guardar</button>
             </form>
@@ -227,10 +260,13 @@
     </div>
 
     <script>
-        // Usamos una nueva llave para no mezclar con la versión anterior de días completos
         let movimientos = JSON.parse(localStorage.getItem('motopapi_datos_carreras')) || [];
 
-        // Guardar Ingreso (Carrera)
+        // Función rápida para rellenar el input de ingreso al tocar los botones de $3, $5, etc.
+        function setMonto(valor) {
+            document.getElementById('montoIngreso').value = valor;
+        }
+
         document.getElementById('ingresoForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const monto = parseFloat(document.getElementById('montoIngreso').value);
@@ -239,16 +275,15 @@
             movimientos.push({
                 tipo: 'ingreso',
                 monto: monto,
-                fechaStr: now.toDateString(), // Ej: "Fri Sep 04 2026"
-                diaSemana: now.getDay(), // 0 a 6
-                horaCorta: now.getHours() + ":00" // Ej: "14:00"
+                fechaStr: now.toDateString(),
+                diaSemana: now.getDay(),
+                horaCorta: now.getHours() + ":00"
             });
             
             guardarDatos();
             this.reset();
         });
 
-        // Guardar Gasto
         document.getElementById('gastoForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const monto = parseFloat(document.getElementById('montoGasto').value);
@@ -287,7 +322,6 @@
                     netaHist += mov.monto;
                     if (mov.fechaStr === todayStr) netaHoy += mov.monto;
 
-                    // Para estadísticas
                     const nombreDia = nombresDias[mov.diaSemana];
                     if (!ingresosPorDia[nombreDia]) ingresosPorDia[nombreDia] = 0;
                     ingresosPorDia[nombreDia] += mov.monto;
@@ -304,11 +338,9 @@
                 }
             });
 
-            // Actualizar Dashboard de HOY
             document.getElementById('resumenNeta').innerText = `$${netaHoy.toFixed(2)}`;
             document.getElementById('resumenGastos').innerText = `$${gastosHoy.toFixed(2)}`;
 
-            // Actualizar Histórico
             document.getElementById('totalCarreras').innerText = totalCarrerasHist;
             document.getElementById('gananciaTotal').innerText = `$${netaHist.toFixed(2)}`;
 
@@ -326,7 +358,6 @@
             document.getElementById('mejorHorario').innerText = mejorHora;
         }
 
-        // Cargar datos al abrir
         window.onload = actualizarInterfaz;
     </script>
 </body>
