@@ -6,11 +6,12 @@
     <title>Moto Papi 🏍️</title>
     <style>
         :root {
-            --bg-color: #050505; /* Fondo Negro profundo */
-            --card-bg: #ffffff; /* Tarjetas Blancas */
-            --primary: #d32f2f; /* Rojo intenso */
-            --text-dark: #121212; /* Texto oscuro */
-            --text-light: #ffffff; /* Texto claro */
+            --bg-color: #050505;
+            --card-bg: #ffffff;
+            --primary: #d32f2f;
+            --text-dark: #121212;
+            --text-light: #ffffff;
+            --green: #2e7d32;
         }
 
         body {
@@ -18,7 +19,7 @@
             background-color: var(--bg-color);
             color: var(--text-light);
             margin: 0;
-            padding: 15px;
+            padding: 10px;
         }
 
         .container {
@@ -29,20 +30,30 @@
         h1 {
             text-align: center;
             color: var(--primary);
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 20px;
+            margin-bottom: 5px;
+            margin-top: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .greeting {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 500;
         }
 
         .card {
             background-color: var(--card-bg);
             color: var(--text-dark);
-            padding: 20px;
+            padding: 15px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(211, 47, 47, 0.2);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .bg-highlight {
@@ -51,71 +62,70 @@
 
         h2 {
             margin-top: 0;
-            border-bottom: 2px solid var(--primary);
+            border-bottom: 2px solid #eee;
             padding-bottom: 8px;
             text-transform: uppercase;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        /* Estructura lado a lado para los formularios */
+        .forms-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .form-half {
+            flex: 1;
+            padding: 12px;
+            margin-bottom: 15px;
         }
 
         label {
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
-            margin-top: 15px;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
+            color: #555;
         }
 
-        input {
+        input, select {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border: 2px solid #ccc;
             border-radius: 8px;
             box-sizing: border-box;
             font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-align: center;
         }
         
-        input:focus {
+        input:focus, select:focus {
             border-color: var(--primary);
             outline: none;
         }
 
-        .row {
-            display: flex;
-            gap: 10px;
-        }
-
-        .col {
-            flex: 1;
-        }
-
-        .gastos-title {
-            margin-top: 25px;
-            color: var(--primary);
-            border-bottom: 1px solid #eee;
-            padding-bottom: 5px;
-        }
-
         .btn-submit {
             width: 100%;
-            background-color: var(--primary);
             color: var(--text-light);
-            padding: 18px;
+            padding: 12px;
             border: none;
             border-radius: 8px;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: bold;
-            margin-top: 25px;
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 1px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
 
-        .btn-submit:active {
-            background-color: #b71c1c;
-            transform: translateY(2px);
-        }
+        .btn-green { background-color: var(--green); }
+        .btn-green:active { background-color: #1b5e20; transform: translateY(2px); }
 
+        .btn-red { background-color: var(--primary); }
+        .btn-red:active { background-color: #b71c1c; transform: translateY(2px); }
+
+        /* Dashboard */
         .stats-grid {
             display: flex;
             justify-content: space-between;
@@ -126,15 +136,16 @@
             margin: 5px 0;
             font-weight: bold;
             color: #555;
+            font-size: 0.9rem;
         }
 
         .stats-grid h3 {
             margin: 0;
-            font-size: 1.8rem;
+            font-size: 2rem;
         }
 
         .text-red { color: var(--primary); }
-        .text-green { color: #2e7d32; }
+        .text-green { color: var(--green); }
 
         .stats-list {
             list-style: none;
@@ -143,10 +154,10 @@
         }
 
         .stats-list li {
-            margin-bottom: 12px;
-            padding-bottom: 12px;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
             border-bottom: 1px solid #eee;
-            font-size: 1.1rem;
+            font-size: 1rem;
             display: flex;
             justify-content: space-between;
         }
@@ -161,71 +172,54 @@
 <body>
     <div class="container">
         <h1>Moto Papi 🏍️</h1>
-        
-        <!-- Formulario -->
-        <form id="jornadaForm" class="card">
-            <h2>Registrar Día</h2>
-            
-            <label>Fecha:</label>
-            <input type="date" id="fecha" required>
+        <p class="greeting">Hola! Moto Papi Maikol ♥</p>
 
-            <div class="row">
-                <div class="col">
-                    <label>Hora Inicio:</label>
-                    <input type="time" id="horaInicio" required>
-                </div>
-                <div class="col">
-                    <label>Hora Fin:</label>
-                    <input type="time" id="horaFin" required>
-                </div>
-            </div>
-
-            <label>Total de Carreras:</label>
-            <input type="number" id="carreras" placeholder="Ej. 15" required min="1">
-
-            <label>Ingreso Total (Bruto $):</label>
-            <input type="number" id="ingresos" step="0.01" placeholder="Ej. 50.00" required min="0">
-
-            <h3 class="gastos-title">Gastos del Día</h3>
-            <div class="row">
-                <div class="col">
-                    <label>Gasolina ($):</label>
-                    <input type="number" id="gasolina" step="0.01" value="0" min="0">
-                </div>
-                <div class="col">
-                    <label>Comida ($):</label>
-                    <input type="number" id="comida" step="0.01" value="0" min="0">
-                </div>
-                <div class="col">
-                    <label>Otros ($):</label>
-                    <input type="number" id="otros" step="0.01" value="0" min="0">
-                </div>
-            </div>
-
-            <button type="submit" class="btn-submit">Guardar Jornada</button>
-        </form>
-
-        <!-- Resumen Rápido -->
+        <!-- Dashboard movido arriba -->
         <div class="card bg-highlight">
-            <h2>Último Registro</h2>
+            <h2 style="border-color: var(--primary); color: var(--primary);">Hoy</h2>
             <div class="stats-grid">
                 <div>
                     <p>Ganancia Neta</p>
                     <h3 id="resumenNeta" class="text-green">$0.00</h3>
                 </div>
                 <div>
-                    <p>Gastos Totales</p>
+                    <p>Gastos</p>
                     <h3 id="resumenGastos" class="text-red">$0.00</h3>
                 </div>
             </div>
         </div>
 
+        <!-- Formularios Lado a Lado -->
+        <div class="forms-wrapper">
+            <!-- Formulario Ingreso -->
+            <form id="ingresoForm" class="card form-half">
+                <h2>Ingreso</h2>
+                <label>Pago de Carrera ($):</label>
+                <input type="number" id="montoIngreso" step="0.01" placeholder="Ej. 3.50" required min="0.01">
+                <button type="submit" class="btn-submit btn-green">Guardar</button>
+            </form>
+
+            <!-- Formulario Gasto -->
+            <form id="gastoForm" class="card form-half">
+                <h2>Gasto</h2>
+                <label>Categoría:</label>
+                <select id="categoriaGasto">
+                    <option value="Gasolina">⛽ Gasolina</option>
+                    <option value="Comida">🍔 Comida</option>
+                    <option value="Otros">🔧 Otros</option>
+                </select>
+                <label>Monto ($):</label>
+                <input type="number" id="montoGasto" step="0.01" placeholder="Ej. 5.00" required min="0.01">
+                <button type="submit" class="btn-submit btn-red">Guardar</button>
+            </form>
+        </div>
+
         <!-- Estadísticas -->
         <div class="card">
-            <h2>Rendimiento</h2>
+            <h2>Rendimiento Histórico</h2>
             <ul class="stats-list">
                 <li><strong>Mejor día:</strong> <span id="mejorDia" class="text-red">-</span></li>
-                <li><strong>Mejor hora de inicio:</strong> <span id="mejorHorario" class="text-red">-</span></li>
+                <li><strong>Mejor hora:</strong> <span id="mejorHorario" class="text-red">-</span></li>
                 <li><strong>Total carreras:</strong> <span id="totalCarreras">0</span></li>
                 <li><strong>Ganancia Neta Total:</strong> <span id="gananciaTotal" class="text-green">$0.00</span></li>
             </ul>
@@ -233,107 +227,107 @@
     </div>
 
     <script>
-        document.getElementById('fecha').valueAsDate = new Date();
+        // Usamos una nueva llave para no mezclar con la versión anterior de días completos
+        let movimientos = JSON.parse(localStorage.getItem('motopapi_datos_carreras')) || [];
 
-        let registros = JSON.parse(localStorage.getItem('motopapi_data')) || [];
-
-        document.getElementById('jornadaForm').addEventListener('submit', function(e) {
+        // Guardar Ingreso (Carrera)
+        document.getElementById('ingresoForm').addEventListener('submit', function(e) {
             e.preventDefault();
-
-            const fecha = document.getElementById('fecha').value;
-            const horaInicio = document.getElementById('horaInicio').value;
-            const horaFin = document.getElementById('horaFin').value;
-            const carreras = parseInt(document.getElementById('carreras').value);
-            const ingresos = parseFloat(document.getElementById('ingresos').value);
+            const monto = parseFloat(document.getElementById('montoIngreso').value);
+            const now = new Date();
             
-            const gasolina = parseFloat(document.getElementById('gasolina').value) || 0;
-            const comida = parseFloat(document.getElementById('comida').value) || 0;
-            const otros = parseFloat(document.getElementById('otros').value) || 0;
-
-            const totalGastos = gasolina + comida + otros;
-            const gananciaNeta = ingresos - totalGastos;
+            movimientos.push({
+                tipo: 'ingreso',
+                monto: monto,
+                fechaStr: now.toDateString(), // Ej: "Fri Sep 04 2026"
+                diaSemana: now.getDay(), // 0 a 6
+                horaCorta: now.getHours() + ":00" // Ej: "14:00"
+            });
             
-            const fechaObj = new Date(fecha + 'T00:00:00');
-            const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-            const diaNombre = diasSemana[fechaObj.getDay()];
-
-            const nuevaJornada = {
-                fecha, diaNombre, horaInicio, horaFin, carreras, ingresos,
-                gastos: { gasolina, comida, otros, total: totalGastos },
-                gananciaNeta
-            };
-
-            registros.push(nuevaJornada);
-            localStorage.setItem('motopapi_data', JSON.stringify(registros));
-
-            actualizarInterfaz(nuevaJornada);
-            alert('¡Jornada guardada con éxito en Moto Papi!');
-            
-            // Limpiar datos para el siguiente día, conservando la fecha actual
-            document.getElementById('carreras').value = '';
-            document.getElementById('ingresos').value = '';
-            document.getElementById('gasolina').value = '0';
-            document.getElementById('comida').value = '0';
-            document.getElementById('otros').value = '0';
-            document.getElementById('fecha').valueAsDate = new Date(); 
+            guardarDatos();
+            this.reset();
         });
 
-        function actualizarInterfaz(ultimaJornada = null) {
-            if (registros.length === 0) return;
-
-            if (ultimaJornada) {
-                document.getElementById('resumenNeta').innerText = `$${ultimaJornada.gananciaNeta.toFixed(2)}`;
-                document.getElementById('resumenGastos').innerText = `$${ultimaJornada.gastos.total.toFixed(2)}`;
-            }
-
-            let totalCarrerasHist = 0;
-            let gananciaNetaHist = 0;
-            let gananciasPorDia = {}; 
-            let gananciasPorHora = {};
-
-            registros.forEach(reg => {
-                totalCarrerasHist += reg.carreras;
-                gananciaNetaHist += reg.gananciaNeta;
-
-                // Encontrar mejor día
-                if (!gananciasPorDia[reg.diaNombre]) gananciasPorDia[reg.diaNombre] = 0;
-                gananciasPorDia[reg.diaNombre] += reg.gananciaNeta;
-
-                // Encontrar mejor horario (tomamos solo la hora, ej. de 08:30 toma "08:00")
-                let horaCorta = reg.horaInicio.split(':')[0] + ":00";
-                if (!gananciasPorHora[horaCorta]) gananciasPorHora[horaCorta] = 0;
-                gananciasPorHora[horaCorta] += reg.gananciaNeta;
+        // Guardar Gasto
+        document.getElementById('gastoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const monto = parseFloat(document.getElementById('montoGasto').value);
+            const now = new Date();
+            
+            movimientos.push({
+                tipo: 'gasto',
+                monto: monto,
+                fechaStr: now.toDateString()
             });
+            
+            guardarDatos();
+            this.reset();
+        });
 
-            document.getElementById('totalCarreras').innerText = totalCarrerasHist;
-            document.getElementById('gananciaTotal').innerText = `$${gananciaNetaHist.toFixed(2)}`;
-
-            let mejorDia = '-';
-            let maxGananciaDia = 0;
-            for (const dia in gananciasPorDia) {
-                if (gananciasPorDia[dia] > maxGananciaDia) {
-                    maxGananciaDia = gananciasPorDia[dia];
-                    mejorDia = dia;
-                }
-            }
-            document.getElementById('mejorDia').innerText = mejorDia;
-
-            let mejorHorario = '-';
-            let maxGananciaHora = 0;
-            for (const hora in gananciasPorHora) {
-                if (gananciasPorHora[hora] > maxGananciaHora) {
-                    maxGananciaHora = gananciasPorHora[hora];
-                    mejorHorario = hora;
-                }
-            }
-            document.getElementById('mejorHorario').innerText = mejorHorario;
+        function guardarDatos() {
+            localStorage.setItem('motopapi_datos_carreras', JSON.stringify(movimientos));
+            actualizarInterfaz();
         }
 
-        window.onload = function() {
-            if(registros.length > 0) {
-                actualizarInterfaz(registros[registros.length - 1]); 
+        function actualizarInterfaz() {
+            const todayStr = new Date().toDateString();
+            
+            let netaHoy = 0;
+            let gastosHoy = 0;
+            let totalCarrerasHist = 0;
+            let netaHist = 0;
+            
+            let ingresosPorDia = {};
+            let ingresosPorHora = {};
+            const nombresDias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+
+            movimientos.forEach(mov => {
+                if (mov.tipo === 'ingreso') {
+                    totalCarrerasHist++;
+                    netaHist += mov.monto;
+                    if (mov.fechaStr === todayStr) netaHoy += mov.monto;
+
+                    // Para estadísticas
+                    const nombreDia = nombresDias[mov.diaSemana];
+                    if (!ingresosPorDia[nombreDia]) ingresosPorDia[nombreDia] = 0;
+                    ingresosPorDia[nombreDia] += mov.monto;
+
+                    if (!ingresosPorHora[mov.horaCorta]) ingresosPorHora[mov.horaCorta] = 0;
+                    ingresosPorHora[mov.horaCorta] += mov.monto;
+
+                } else if (mov.tipo === 'gasto') {
+                    netaHist -= mov.monto;
+                    if (mov.fechaStr === todayStr) {
+                        gastosHoy += mov.monto;
+                        netaHoy -= mov.monto;
+                    }
+                }
+            });
+
+            // Actualizar Dashboard de HOY
+            document.getElementById('resumenNeta').innerText = `$${netaHoy.toFixed(2)}`;
+            document.getElementById('resumenGastos').innerText = `$${gastosHoy.toFixed(2)}`;
+
+            // Actualizar Histórico
+            document.getElementById('totalCarreras').innerText = totalCarrerasHist;
+            document.getElementById('gananciaTotal').innerText = `$${netaHist.toFixed(2)}`;
+
+            let mejorDia = '-', maxDia = 0;
+            for (let d in ingresosPorDia) {
+                if (ingresosPorDia[d] > maxDia) { maxDia = ingresosPorDia[d]; mejorDia = d; }
             }
-        };
+            
+            let mejorHora = '-', maxHora = 0;
+            for (let h in ingresosPorHora) {
+                if (ingresosPorHora[h] > maxHora) { maxHora = ingresosPorHora[h]; mejorHora = h; }
+            }
+
+            document.getElementById('mejorDia').innerText = mejorDia;
+            document.getElementById('mejorHorario').innerText = mejorHora;
+        }
+
+        // Cargar datos al abrir
+        window.onload = actualizarInterfaz;
     </script>
 </body>
 </html>
